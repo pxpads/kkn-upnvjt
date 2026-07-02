@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profil Desa Prambatan & Program Kerja KKN UPN 2026</title>
+<style>
+:root{
+  --green-900:#0b3d24;
+  --green-700:#146c43;
+  --green-600:#1a8a55;
+  --green-500:#22a366;
+  --green-400:#4cbf85;
+  --green-100:#e6f6ee;
+  --green-50:#f3fbf7;
+  --white:#ffffff;
+  --text:#173a2b;
+  --muted:#5b7469;
+  --border:#d5ece1;
+  --shadow:0 8px 24px rgba(11,61,36,.08);
+  --radius:16px;
+  --bg:var(--green-50);
+  --card-bg:var(--white);
+  --sidebar-bg:var(--green-900);
+  --sidebar-text:#d9efe3;
+  transition:background .3s,color .3s;
+}
+[data-theme="dark"]{
+  --bg:#0e1712;
+  --card-bg:#152420;
+  --text:#e6f6ee;
+  --muted:#9db8ab;
+  --border:#233a31;
+  --green-100:#173a2b;
+  --green-50:#0e1712;
+  --shadow:0 8px 24px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;}
+
+/* ---------- Progress bar ---------- */
+#progress-bar{
+  position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--green-500),var(--green-400));
+  width:0%;z-index:1200;transition:width .1s ease-out;
+}
+
+/* ---------- Topbar (mobile) ---------- */
+#topbar{
+  position:fixed;top:0;left:0;right:0;height:56px;background:var(--sidebar-bg);
+  display:none;align-items:center;justify-content:space-between;padding:0 14px;z-index:1100;
+  box-shadow:var(--shadow);
+}
+#topbar .brand{color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;}
+#hamburger{
+  background:none;border:none;color:#fff;font-size:24px;cursor:pointer;padding:4px 8px;
+}
+
+/* ---------- Sidebar ---------- */
+#sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:270px;background:var(--sidebar-bg);
+  color:var(--sidebar-text);padding:24px 16px;overflow-y:auto;z-index:1000;
+  transition:transform .3s ease;
+}
+#sidebar .brand{
+  display:flex;align-items:center;gap:10px;padding:8px 10px 22px 10px;border-bottom:1px solid rgba(255,255,255,.12);
+  margin-bottom:16px;
+}
+#sidebar .brand .logo{font-size:28px;}
+#sidebar .brand div h1{font-size:15px;color:#fff;line-height:1.2;}
+#sidebar .brand div p{font-size:11px;color:#a9d4bd;}
+#sidebar nav a{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:13.5px;
+  color:var(--sidebar-text);margin-bottom:2px;transition:background .2s,color .2s,transform .2s;
+}
+#sidebar nav a:hover{background:rgba(255,255,255,.08);transform:translateX(2px);}
+#sidebar nav a.active{background:var(--green-500);color:#fff;font-weight:600;}
+#sidebar .toggles{margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);}
+.toggle-btn{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;
+  padding:10px;border-radius:10px;cursor:pointer;font-size:13px;margin-bottom:8px;transition:background .2s;
+}
+.toggle-btn:hover{background:rgba(255,255,255,.18);}
+#overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;
+}
+
+/* ---------- Main ---------- */
+#main{margin-left:270px;padding:0;}
+section{
+  padding:70px 48px;max-width:1100px;margin:0 auto;scroll-margin-top:20px;
+}
+h2.sec-title{
+  font-size:28px;color:var(--green-700);margin-bottom:6px;display:flex;align-items:center;gap:10px;
+}
+[data-theme="dark"] h2.sec-title{color:var(--green-400);}
+.sec-sub{color:var(--muted);margin-bottom:32px;font-size:14.5px;}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.show{opacity:1;transform:translateY(0);}
+
+/* ---------- Hero ---------- */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  background:linear-gradient(160deg,var(--green-900) 0%,var(--green-700) 55%,var(--green-500) 100%);
+  color:#fff;position:relative;overflow:hidden;padding:40px 24px;
+}
+#hero::before,#hero::after{
+  content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.06);
+}
+#hero::before{width:420px;height:420px;top:-140px;right:-120px;}
+#hero::after{width:300px;height:300px;bottom:-100px;left:-80px;}
+.hero-emoji{font-size:64px;margin-bottom:10px;animation:float 4s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+#hero h1{font-size:clamp(28px,5vw,50px);font-weight:800;margin-bottom:8px;letter-spacing:.5px;}
+#hero .loc{font-size:clamp(15px,2.4vw,19px);color:#d5f2e2;margin-bottom:18px;}
+#hero .tagline{
+  font-size:clamp(14px,2vw,18px);max-width:640px;margin:0 auto 30px;color:#eafff2;font-style:italic;
+  border-left:3px solid #fff;padding-left:14px;text-align:left;
+}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:30px;}
+.hero-badges span{
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);padding:8px 16px;border-radius:30px;font-size:13px;
+}
+.scroll-hint{font-size:13px;color:#cdeedd;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+
+/* ---------- Cards / grids ---------- */
+.grid{display:grid;gap:18px;}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+.card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(11,61,36,.14);}
+.card .icon{font-size:30px;margin-bottom:10px;display:block;}
+.card h3{font-size:16.5px;color:var(--green-700);margin-bottom:8px;}
+[data-theme="dark"] .card h3{color:var(--green-400);}
+.card p, .card li{font-size:13.8px;color:var(--muted);}
+.card ul{padding-left:18px;margin-top:6px;}
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:28px 0;}
+.stat{
+  background:var(--green-100);border-radius:14px;padding:18px 10px;text-align:center;border:1px solid var(--border);
+}
+.stat .num{font-size:24px;font-weight:800;color:var(--green-700);}
+[data-theme="dark"] .stat .num{color:var(--green-400);}
+.stat .label{font-size:12px;color:var(--muted);margin-top:2px;}
+
+/* timeline (potensi & swot combined style reused) */
+.dev-timeline{position:relative;margin:30px 0;padding-left:28px;border-left:3px solid var(--green-400);}
+.dev-item{position:relative;margin-bottom:26px;padding-left:16px;}
+.dev-item::before{
+  content:"";position:absolute;left:-37px;top:2px;width:16px;height:16px;border-radius:50%;
+  background:var(--green-500);border:3px solid var(--card-bg);box-shadow:0 0 0 3px var(--green-400);
+}
+.dev-item .yr{font-weight:700;color:var(--green-700);font-size:14px;}
+[data-theme="dark"] .dev-item .yr{color:var(--green-400);}
+.dev-item p{font-size:13.6px;color:var(--muted);margin-top:2px;}
+
+/* SWOT */
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.swot-card{border-radius:var(--radius);padding:22px;color:#fff;box-shadow:var(--shadow);}
+.swot-card h3{font-size:17px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.swot-card ul{padding-left:18px;font-size:13.6px;}
+.swot-card li{margin-bottom:6px;}
+.swot-s{background:linear-gradient(135deg,#1a8a55,#0b3d24);}
+.swot-w{background:linear-gradient(135deg,#c98a12,#7a5108);}
+.swot-o{background:linear-gradient(135deg,#1a7fb0,#0b3d5a);}
+.swot-t{background:linear-gradient(135deg,#c0392b,#6b1b12);}
+
+/* problems */
+.problem-group{margin-bottom:20px;}
+.problem-group summary{
+  cursor:pointer;font-weight:700;font-size:15px;color:var(--green-700);padding:14px 18px;
+  background:var(--green-100);border-radius:12px;list-style:none;display:flex;align-items:center;gap:10px;
+  border:1px solid var(--border);
+}
+[data-theme="dark"] .problem-group summary{color:var(--green-400);}
+.problem-group summary::-webkit-details-marker{display:none;}
+.problem-group[open] summary{border-radius:12px 12px 0 0;}
+.problem-group .content{
+  border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;padding:14px 20px;background:var(--card-bg);
+}
+.problem-group ul{padding-left:18px;font-size:13.8px;color:var(--muted);}
+.problem-group li{margin-bottom:6px;}
+
+/* program kerja */
+.proker-card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:18px;box-shadow:var(--shadow);overflow:hidden;
+}
+.proker-head{
+  display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;
+  background:linear-gradient(90deg,var(--green-600),var(--green-500));color:#fff;
+}
+.proker-head .num{
+  width:34px;height:34px;flex:0 0 34px;background:rgba(255,255,255,.22);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;
+}
+.proker-head .icon{font-size:22px;}
+.proker-head h3{font-size:15.5px;flex:1;}
+.proker-head .chev{transition:transform .3s;font-size:14px;}
+.proker-card.open .chev{transform:rotate(180deg);}
+.proker-body{max-height:0;overflow:hidden;transition:max-height .4s ease;background:var(--card-bg);}
+.proker-card.open .proker-body{max-height:800px;}
+.proker-body-inner{padding:18px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+.pk-field{font-size:13.4px;}
+.pk-field b{color:var(--green-700);display:block;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;}
+[data-theme="dark"] .pk-field b{color:var(--green-400);}
+.pk-field span{color:var(--muted);}
+
+/* timeline 30 hari */
+.wk-timeline{position:relative;margin-left:10px;padding-left:34px;border-left:3px solid var(--green-400);}
+.wk-item{margin-bottom:30px;position:relative;}
+.wk-item::before{
+  content:attr(data-w);position:absolute;left:-58px;top:0;width:42px;height:42px;border-radius:50%;
+  background:var(--green-600);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 4px var(--green-100);
+}
+.wk-item .box{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);
+}
+.wk-item h3{color:var(--green-700);font-size:15.5px;margin-bottom:6px;}
+[data-theme="dark"] .wk-item h3{color:var(--green-400);}
+.wk-item p{font-size:13.6px;color:var(--muted);}
+
+/* kesimpulan */
+.concl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-bottom:24px;}
+.concl-card{border-radius:var(--radius);padding:22px;background:var(--green-100);border:1px solid var(--border);}
+.concl-card h3{color:var(--green-700);font-size:15.5px;margin-bottom:8px;}
+[data-theme="dark"] .concl-card h3{color:var(--green-400);}
+.concl-card ul{padding-left:18px;font-size:13.6px;color:var(--muted);}
+.concl-card li{margin-bottom:6px;}
+
+footer{
+  text-align:center;padding:34px 20px 60px;font-size:12.5px;color:var(--muted);
+}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;background:var(--green-600);color:#fff;border:none;
+  padding:11px 20px;border-radius:30px;font-size:14px;cursor:pointer;box-shadow:var(--shadow);transition:background .2s,transform .2s;
+}
+.btn:hover{background:var(--green-700);transform:translateY(-2px);}
+.btn.ghost{background:transparent;border:1.5px solid #fff;color:#fff;}
+.btn.ghost:hover{background:rgba(255,255,255,.15);}
+
+#backToTop{
+  position:fixed;bottom:26px;right:22px;width:46px;height:46px;border-radius:50%;background:var(--green-600);
+  color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:var(--shadow);display:none;align-items:center;justify-content:center;
+  z-index:800;transition:background .2s,transform .2s;
+}
+#backToTop:hover{background:var(--green-700);transform:translateY(-3px);}
+
+#printBtn{
+  position:fixed;bottom:26px;right:80px;width:46px;height:46px;border-radius:50%;background:var(--green-900);
+  color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;
+  z-index:800;transition:background .2s,transform .2s;
+}
+#printBtn:hover{transform:translateY(-3px);}
+
+/* responsive */
+@media(max-width:900px){
+  #topbar{display:flex;}
+  #sidebar{transform:translateX(-100%);top:0;height:100%;}
+  #sidebar.open{transform:translateX(0);}
+  #overlay.show{display:block;}
+  #main{margin-left:0;padding-top:56px;}
+  section{padding:46px 20px;}
+  .swot-grid{grid-template-columns:1fr;}
+  .wk-timeline{margin-left:4px;padding-left:26px;}
+  .wk-item::before{left:-46px;width:36px;height:36px;font-size:10.5px;}
+}
+@media print{
+  #sidebar,#topbar,#overlay,#progress-bar,#backToTop,#printBtn,.no-print{display:none !important;}
+  #main{margin-left:0 !important;}
+  section{padding:14px 6px;page-break-inside:avoid;}
+  body{background:#fff;color:#000;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div id="topbar">
+  <div class="brand"><span>🌾</span><span>Desa Prambatan</span></div>
+  <button id="hamburger" aria-label="menu">☰</button>
+</div>
+<div id="overlay"></div>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="logo">🌾</div>
+    <div>
+      <h1>Desa Prambatan</h1>
+      <p>Kec. Balen • Kab. Bojonegoro</p>
+    </div>
+  </div>
+  <nav id="nav-links">
+    <a href="#hero">🏠 Beranda</a>
+    <a href="#profil">📍 Profil Desa</a>
+    <a href="#potensi">🌱 Potensi Desa</a>
+    <a href="#swot">🧭 Analisis SWOT</a>
+    <a href="#masalah">⚠️ Permasalahan</a>
+    <a href="#proker">📋 Program Kerja</a>
+    <a href="#timeline">🗓️ Timeline 30 Hari</a>
+    <a href="#kesimpulan">✅ Kesimpulan</a>
+  </nav>
+  <div class="toggles">
+    <button class="toggle-btn" id="darkToggle">🌙 <span id="darkLabel">Mode Gelap</span></button>
+    <button class="toggle-btn" id="printBtnSide">🖨️ Cetak / Simpan PDF</button>
+  </div>
+</aside>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-emoji">🌾</div>
+    <h1>Desa Prambatan</h1>
+    <div class="loc">Kecamatan Balen • Kabupaten Bojonegoro • Jawa Timur</div>
+    <p class="tagline">"Merawat Warisan Soka Lima, Menumbuhkan Desa Digital yang Mandiri, Produktif, dan Berdaya Saing."</p>
+    <div class="hero-badges">
+      <span>👨‍👩‍👧‍👦 ± 2.237 Jiwa</span>
+      <span>🏘️ 2 Dukuh</span>
+      <span>🌱 Basis Agraris</span>
+      <span>🎓 Sasaran KKN UPN 2026</span>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="#profil" class="btn">📖 Mulai Membaca</a>
+      <a href="#proker" class="btn ghost">📋 Lihat Program Kerja</a>
+    </div>
+    <div style="height:26px;"></div>
+    <div class="scroll-hint">↓ Gulir ke bawah untuk menjelajah e-book ini</div>
+  </section>
+
+  <!-- PROFIL DESA -->
+  <section id="profil">
+    <h2 class="sec-title reveal">📍 Profil Desa</h2>
+    <p class="sec-sub reveal">Gambaran umum geografis, sosial, dan fasilitas Desa Prambatan.</p>
+
+    <div class="grid grid-2 reveal">
+      <div class="card">
+        <span class="icon">🗺️</span>
+        <h3>Lokasi Geografis</h3>
+        <p>Desa Prambatan terletak di wilayah Kecamatan Balen, Kabupaten Bojonegoro, Jawa Timur. Berbatasan dengan Desa Sekaran & Kedungdowo (utara), Desa Bogo/Kec. Kapas (barat), Desa Mulyoagung (selatan), dan Desa Lengkong (timur). Jarak ke pusat Kecamatan Balen ± 5 km, dan ke pusat Kabupaten Bojonegoro ± 17 km.</p>
+      </div>
+      <div class="card">
+        <span class="icon">📐</span>
+        <h3>Luas Wilayah</h3>
+        <p>Wilayah desa didominasi lahan pertanian palawija dengan sistem irigasi yang cukup aktif, terbagi atas dua dukuhan yaitu Dukuh Krajan Prambatan dan Dukuh Mundu, dengan pola permukiman mengelompok di sepanjang jalan desa.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🏘️</span>
+        <h3>Kondisi Umum Desa</h3>
+        <p>Desa dengan sejarah panjang sejak era Kerajaan Demak Bintoro ini kini berkembang sebagai desa agraris dengan mobilitas hasil pertanian dan industri kecil pengolahan yang cukup tinggi menuju wilayah kecamatan dan kabupaten.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🌾</span>
+        <h3>Penggunaan Lahan</h3>
+        <p>Mayoritas lahan digunakan untuk pertanian pangan (padi & palawija), sebagian untuk perkebunan pisang rakyat (bahan baku industri ndalung), permukiman warga, serta fasilitas umum desa.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🏛️</span>
+        <h3>Fasilitas Umum</h3>
+        <p>Balai desa, lapangan olahraga, pasar desa, jalan poros desa, serta pos ronda tersebar di dua dukuhan untuk menunjang aktivitas warga sehari-hari.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🎓</span>
+        <h3>Pendidikan</h3>
+        <p>Tersedia jenjang PAUD/TK dan Sekolah Dasar di dalam desa, sementara jenjang SMP/SMA ditempuh warga dengan mobilitas ke kecamatan/kabupaten terdekat. Terdapat pula lembaga pendidikan Al-Qur'an (LPQ) yang aktif membina generasi muda.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🏥</span>
+        <h3>Kesehatan</h3>
+        <p>Layanan kesehatan dasar tersedia melalui Poskesdes/Posyandu yang rutin melayani ibu-anak dan lansia, dengan rujukan lanjutan ke Puskesmas Kecamatan Balen.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🕌</span>
+        <h3>Sarana Ibadah</h3>
+        <p>Masjid dan musala tersebar di kedua dukuh sebagai pusat kegiatan keagamaan sekaligus sosial warga, didukung aktivitas LPQ/madin untuk pendidikan keagamaan anak-anak.</p>
+      </div>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat"><div class="num">2.237</div><div class="label">Jumlah Penduduk (jiwa)</div></div>
+      <div class="stat"><div class="num">1.112</div><div class="label">Laki-laki</div></div>
+      <div class="stat"><div class="num">1.125</div><div class="label">Perempuan</div></div>
+      <div class="stat"><div class="num">2</div><div class="label">Dukuh (Krajan & Mundu)</div></div>
+      <div class="stat"><div class="num">±17 km</div><div class="label">Jarak ke Kab. Bojonegoro</div></div>
+    </div>
+  </section>
+
+  <!-- POTENSI DESA -->
+  <section id="potensi">
+    <h2 class="sec-title reveal">🌱 Potensi Desa</h2>
+    <p class="sec-sub reveal">Sektor unggulan yang dapat menjadi motor penggerak ekonomi warga.</p>
+
+    <div class="grid grid-3 reveal">
+      <div class="card">
+        <span class="icon">🌾</span>
+        <h3>Pertanian</h3>
+        <p>Padi dan palawija menjadi tumpuan ekonomi mayoritas warga, ditunjang irigasi yang relatif memadai dan mobilisasi hasil panen yang aktif ke pasar kecamatan.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🏪</span>
+        <h3>UMKM</h3>
+        <p>Usaha rumahan skala kecil-menengah bergerak di bidang kuliner, kerajinan, dan pengolahan hasil pertanian, namun sebagian besar masih dipasarkan secara konvensional.</p>
+      </div>
+      <div class="card">
+        <span class="icon">🍌</span>
+        <h3>Industri Ndalung Pelepah Pisang</h3>
+        <p>Industri kecil pengolahan pelepah pisang (ndalung/tampar) menjadi produk kerajinan bernilai jual merupakan ciri khas ekonomi kreatif desa yang berpotensi dikembangkan lebih luas.</p>
+      </div>
+      <div class="card">
+        <span class="icon">👨‍👩‍👧‍👦</span>
+        <h3>Potensi SDM</h3>
+        <p>Jumlah penduduk usia produktif yang signifikan menjadi modal sosial penting, terutama bila diarahkan pada peningkatan keterampilan digital dan kewirausahaan.</p>
+      </div>
+      <div class="card">
+        <span class="icon">📶</span>
+        <h3>Peluang Digitalisasi</h3>
+        <p>Desa telah memiliki website resmi desa sebagai pondasi, namun pemanfaatan digital untuk pemasaran UMKM, promosi wisata, dan pelayanan publik masih dapat dioptimalkan.</p>
+      </div>
+      <div class="card">
+        <span class="icon">📈</span>
+        <h3>Peluang Pengembangan</h3>
+        <p>Kombinasi hasil pertanian, kerajinan pelepah pisang, dan SDM muda membuka peluang besar untuk branding produk lokal berbasis identitas desa yang khas.</p>
+      </div>
+    </div>
+
+    <h3 style="margin:36px 0 12px;color:var(--green-700);" class="reveal">🕰️ Timeline Perkembangan Desa</h3>
+    <div class="dev-timeline reveal">
+      <div class="dev-item"><div class="yr">Era Demak Bintoro</div><p>Wilayah dikenal sebagai hutan Soka Lima, tempat pertapaan tokoh keturunan Majapahit sebelum menjadi permukiman.</p></div>
+      <div class="dev-item"><div class="yr">Awal Berdiri</div><p>Tokoh Dimangun memimpin warga membuka dan menamai wilayah menjadi Desa Prambatan.</p></div>
+      <div class="dev-item"><div class="yr">1963–2007</div><p>Pergantian beberapa generasi Kepala Desa (Katam, Kiswari, Sarjiman, Nyamiran) membangun tata kelola desa secara bertahap.</p></div>
+      <div class="dev-item"><div class="yr">2007–sekarang</div><p>Kepemimpinan desa berlanjut dengan penguatan infrastruktur, pertanian, dan mulai dirintisnya kanal informasi desa berbasis website resmi.</p></div>
+      <div class="dev-item"><div class="yr">2026 — KKN UPN</div><p>Momentum kolaborasi mahasiswa KKN untuk mendorong literasi digital, UMKM naik kelas, dan branding produk lokal desa.</p></div>
+    </div>
+  </section>
+
+  <!-- SWOT -->
+  <section id="swot">
+    <h2 class="sec-title reveal">🧭 Analisis SWOT</h2>
+    <p class="sec-sub reveal">Pemetaan kekuatan, kelemahan, peluang, dan ancaman sebagai dasar perumusan program kerja.</p>
+    <div class="swot-grid reveal">
+      <div class="swot-card swot-s">
+        <h3>💪 Strength (Kekuatan)</h3>
+        <ul>
+          <li>Basis pertanian yang kuat dan lahan subur</li>
+          <li>Industri kerajinan khas (ndalung pelepah pisang)</li>
+          <li>Nilai sejarah & budaya desa yang kuat sebagai identitas</li>
+          <li>Sarana ibadah & pendidikan agama aktif</li>
+          <li>Website resmi desa sudah tersedia</li>
+        </ul>
+      </div>
+      <div class="swot-card swot-w">
+        <h3>⚠️ Weakness (Kelemahan)</h3>
+        <ul>
+          <li>Literasi digital warga & perangkat desa masih terbatas</li>
+          <li>Pemasaran UMKM masih konvensional</li>
+          <li>Minim dokumentasi visual produk & potensi desa</li>
+          <li>Pengelolaan sampah belum terorganisir</li>
+          <li>Kemampuan bahasa asing warga usia sekolah terbatas</li>
+        </ul>
+      </div>
+      <div class="swot-card swot-o">
+        <h3>🚀 Opportunity (Peluang)</h3>
+        <ul>
+          <li>Tren belanja online yang terus meningkat</li>
+          <li>Dukungan program KKN & kemitraan kampus</li>
+          <li>Potensi branding produk lokal berbasis cerita desa</li>
+          <li>Pemanfaatan AI untuk efisiensi kerja perangkat desa</li>
+          <li>Bantuan/hibah pemerintah untuk desa digital</li>
+        </ul>
+      </div>
+      <div class="swot-card swot-t">
+        <h3>🔥 Threat (Ancaman)</h3>
+        <ul>
+          <li>Persaingan produk dari desa/daerah lain yang lebih siap digital</li>
+          <li>Ketergantungan pada hasil pertanian yang rentan cuaca</li>
+          <li>Migrasi usia produktif ke kota (urbanisasi)</li>
+          <li>Minim regenerasi pelaku UMKM & pengrajin</li>
+          <li>Sampah & lingkungan bila tak dikelola menurunkan kualitas hidup</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MASALAH -->
+  <section id="masalah">
+    <h2 class="sec-title reveal">⚠️ Permasalahan Desa</h2>
+    <p class="sec-sub reveal">Klik setiap kategori untuk melihat rincian permasalahan.</p>
+
+    <details class="problem-group reveal" open>
+      <summary>🎓 Pendidikan</summary>
+      <div class="content"><ul>
+        <li>Minimnya penguasaan bahasa Inggris pada siswa usia sekolah dasar-menengah.</li>
+        <li>Keterbatasan akses bimbingan belajar tambahan di luar jam sekolah formal.</li>
+        <li>Belum optimalnya pemanfaatan media digital untuk pembelajaran.</li>
+      </ul></div>
+    </details>
+    <details class="problem-group reveal">
+      <summary>💰 Ekonomi</summary>
+      <div class="content"><ul>
+        <li>Nilai jual produk UMKM & kerajinan pelepah pisang belum optimal karena minim branding.</li>
+        <li>Ketergantungan tinggi terhadap sektor pertanian musiman.</li>
+        <li>Akses permodalan dan pelatihan kewirausahaan masih terbatas.</li>
+      </ul></div>
+    </details>
+    <details class="problem-group reveal">
+      <summary>🌳 Lingkungan</summary>
+      <div class="content"><ul>
+        <li>Belum ada sistem pengelolaan sampah rumah tangga yang terorganisir.</li>
+        <li>Minimnya edukasi warga tentang pemilahan sampah organik-anorganik.</li>
+        <li>Potensi pemanfaatan limbah pelepah pisang belum maksimal untuk mengurangi limbah pertanian.</li>
+      </ul></div>
+    </details>
+    <details class="problem-group reveal">
+      <summary>💻 Digitalisasi</summary>
+      <div class="content"><ul>
+        <li>Perangkat desa belum terbiasa memanfaatkan tools digital & AI untuk efisiensi administrasi.</li>
+        <li>Website desa belum dikelola/diperbarui secara rutin dan optimal.</li>
+        <li>Minimnya dokumentasi profil desa dalam bentuk video/konten digital menarik.</li>
+      </ul></div>
+    </details>
+    <details class="problem-group reveal">
+      <summary>📢 Pemasaran UMKM</summary>
+      <div class="content"><ul>
+        <li>Produk UMKM belum memiliki foto produk yang layak untuk dipasarkan online.</li>
+        <li>Pelaku UMKM belum familiar dengan strategi pemasaran media sosial.</li>
+        <li>Belum ada identitas merek (branding) yang konsisten pada produk lokal desa.</li>
+      </ul></div>
+    </details>
+  </section>
+
+  <!-- PROGRAM KERJA -->
+  <section id="proker">
+    <h2 class="sec-title reveal">📋 Program Kerja KKN UPN 2026</h2>
+    <p class="sec-sub reveal">10 program prioritas — klik setiap kartu untuk melihat rincian lengkap.</p>
+    <div id="proker-list"></div>
+  </section>
+
+  <!-- TIMELINE 30 HARI -->
+  <section id="timeline">
+    <h2 class="sec-title reveal">🗓️ Timeline Pelaksanaan KKN — 30 Hari</h2>
+    <p class="sec-sub reveal">Tahapan pelaksanaan program kerja secara bertahap dan terstruktur.</p>
+    <div class="wk-timeline reveal">
+      <div class="wk-item" data-w="M1">
+        <div class="box">
+          <h3>🔍 Minggu 1 — Observasi & Perencanaan</h3>
+          <p>Survei lapangan, pemetaan potensi & masalah, koordinasi dengan perangkat desa dan tokoh masyarakat, penyusunan rencana kerja detail serta pembagian tim per program.</p>
+        </div>
+      </div>
+      <div class="wk-item" data-w="M2">
+        <div class="box">
+          <h3>⚙️ Minggu 2 — Implementasi Awal</h3>
+          <p>Pelaksanaan pelatihan literasi digital, mulai pembuatan website desa, sesi awal digitalisasi UMKM, dan pelatihan foto produk bersama pelaku usaha.</p>
+        </div>
+      </div>
+      <div class="wk-item" data-w="M3">
+        <div class="box">
+          <h3>🤝 Minggu 3 — Pendampingan Intensif</h3>
+          <p>Pendampingan pemasaran media sosial, pelatihan AI untuk perangkat desa, inisiasi bank sampah, kelas bahasa Inggris, serta produksi video profil desa & branding produk.</p>
+        </div>
+      </div>
+      <div class="wk-item" data-w="M4">
+        <div class="box">
+          <h3>📊 Minggu 4 — Evaluasi & Serah Terima</h3>
+          <p>Evaluasi capaian tiap program, penyempurnaan output (website, video, materi branding), penyusunan laporan akhir, dan serah terima program kepada perangkat desa & warga.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KESIMPULAN -->
+  <section id="kesimpulan">
+    <h2 class="sec-title reveal">✅ Kesimpulan & Rekomendasi</h2>
+    <p class="sec-sub reveal">Desa Prambatan memiliki modal sosial dan ekonomi yang kuat, namun membutuhkan akselerasi digital dan branding agar potensi lokal dapat bersaing lebih luas.</p>
+    <div class="concl-grid reveal">
+      <div class="concl-card">
+        <h3>🏛️ Untuk Pemerintah Desa</h3>
+        <ul>
+          <li>Menetapkan penanggung jawab pengelola website & media sosial desa secara berkelanjutan.</li>
+          <li>Mendukung penuh keberlanjutan bank sampah dengan regulasi/himbauan resmi.</li>
+          <li>Mengalokasikan sebagian anggaran desa untuk promosi produk UMKM unggulan.</li>
+        </ul>
+      </div>
+      <div class="concl-card">
+        <h3>🎓 Untuk Mahasiswa KKN Berikutnya</h3>
+        <ul>
+          <li>Melanjutkan pendampingan branding & pemasaran digital UMKM yang telah dirintis.</li>
+          <li>Mengembangkan konten website & video profil desa secara berkala.</li>
+          <li>Memperluas cakupan kelas bahasa Inggris dan literasi digital ke lebih banyak siswa.</li>
+        </ul>
+      </div>
+      <div class="concl-card">
+        <h3>♻️ Keberlanjutan Program</h3>
+        <ul>
+          <li>Membentuk kelompok kader digital desa dari pemuda karang taruna.</li>
+          <li>Menjadikan bank sampah sebagai unit usaha bernilai ekonomi bagi warga.</li>
+          <li>Menjalin kemitraan lanjutan antara desa dan kampus untuk monitoring hasil program.</li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:10px;">
+      <button class="btn" onclick="window.print()">🖨️ Cetak / Simpan sebagai PDF</button>
+    </div>
+  </section>
+
+  <footer>
+    🌾 E-Book Interaktif — Profil Desa Prambatan & Program Kerja KKN UPN 2026 <br>
+    Disusun sebagai bahan presentasi mahasiswa KKN • Dibuat dengan HTML, CSS & JavaScript murni
+  </footer>
+
+</main>
+
+<button id="backToTop" title="Kembali ke atas">⬆️</button>
+<button id="printBtn" class="no-print" title="Cetak / Simpan PDF" onclick="window.print()">🖨️</button>
+
+<script>
+/* ---------------- Data Program Kerja ---------------- */
+const prokerData = [
+  {icon:"💻",title:"Pelatihan Literasi Digital",
+    tujuan:"Meningkatkan pemahaman dasar warga & perangkat desa tentang penggunaan perangkat digital dan internet secara aman & produktif.",
+    sasaran:"Perangkat desa, ibu PKK, pemuda karang taruna",
+    waktu:"Minggu ke-2, 2 sesi @2 jam",
+    sdm:"3–4 mahasiswa fasilitator",
+    biaya:"Rp 300.000 – 500.000",
+    output:"Modul literasi digital sederhana & sesi pelatihan tatap muka",
+    indikator:"80% peserta mampu praktik dasar (email, pencarian informasi, keamanan data)"},
+  {icon:"🌐",title:"Pembuatan Website Desa",
+    tujuan:"Menyediakan/menyempurnakan kanal informasi resmi desa yang informatif dan mudah diakses publik.",
+    sasaran:"Perangkat desa & masyarakat umum",
+    waktu:"Minggu ke-2 s.d. ke-4",
+    sdm:"2–3 mahasiswa (desain & konten)",
+    biaya:"Rp 0 – 200.000 (platform gratis/hosting sederhana)",
+    output:"Website desa aktif berisi profil, potensi, dan info layanan",
+    indikator:"Website dapat diakses publik & dikelola perangkat desa"},
+  {icon:"🏪",title:"Digitalisasi UMKM",
+    tujuan:"Membantu pelaku UMKM memasukkan produk ke platform digital/marketplace sederhana.",
+    sasaran:"Pelaku UMKM & pengrajin ndalung pelepah pisang",
+    waktu:"Minggu ke-2 s.d. ke-3",
+    sdm:"3 mahasiswa pendamping UMKM",
+    biaya:"Rp 100.000 – 300.000",
+    output:"Katalog produk digital & akun platform digital UMKM",
+    indikator:"Minimal 5 UMKM memiliki katalog/akun digital aktif"},
+  {icon:"📸",title:"Pelatihan Foto Produk",
+    tujuan:"Meningkatkan kualitas visual produk UMKM agar lebih menarik untuk dipasarkan online.",
+    sasaran:"Pelaku UMKM & pengrajin lokal",
+    waktu:"Minggu ke-2, 1 sesi praktik",
+    sdm:"2 mahasiswa fasilitator",
+    biaya:"Rp 50.000 – 150.000 (properti sederhana)",
+    output:"Kumpulan foto produk siap pakai untuk katalog & media sosial",
+    indikator:"Setiap peserta memiliki minimal 3 foto produk layak unggah"},
+  {icon:"📱",title:"Pelatihan Pemasaran Media Sosial",
+    tujuan:"Membekali pelaku UMKM strategi promosi produk melalui media sosial secara efektif.",
+    sasaran:"Pelaku UMKM & pemuda desa",
+    waktu:"Minggu ke-3, 2 sesi",
+    sdm:"3 mahasiswa fasilitator",
+    biaya:"Rp 100.000 – 200.000",
+    output:"Akun media sosial UMKM aktif & jadwal konten sederhana",
+    indikator:"Minimal 5 akun UMKM aktif memposting secara rutin"},
+  {icon:"🤖",title:"Pelatihan AI untuk Perangkat Desa",
+    tujuan:"Mengenalkan pemanfaatan tools AI untuk mempermudah pekerjaan administrasi & pelayanan desa.",
+    sasaran:"Perangkat desa",
+    waktu:"Minggu ke-3, 1–2 sesi",
+    sdm:"2 mahasiswa fasilitator",
+    biaya:"Rp 0 – 100.000",
+    output:"Panduan praktis pemanfaatan AI untuk tugas administratif",
+    indikator:"Perangkat desa mampu mempraktikkan minimal 2 use-case AI dasar"},
+  {icon:"♻️",title:"Bank Sampah Desa",
+    tujuan:"Membentuk sistem pengelolaan sampah berbasis pemilahan & bernilai ekonomi bagi warga.",
+    sasaran:"Warga desa & pemuda karang taruna",
+    waktu:"Minggu ke-3 s.d. ke-4",
+    sdm:"4–5 mahasiswa & kader lingkungan",
+    biaya:"Rp 500.000 – 1.000.000 (timbangan, wadah pilah)",
+    output:"Unit bank sampah aktif dengan pengurus dari warga",
+    indikator:"Bank sampah beroperasi rutin minimal 1x/minggu pasca-KKN"},
+  {icon:"🇬🇧",title:"Kelas Bahasa Inggris untuk Siswa",
+    tujuan:"Meningkatkan minat & kemampuan dasar bahasa Inggris siswa SD/SMP di desa.",
+    sasaran:"Siswa SD/SMP Desa Prambatan",
+    waktu:"Minggu ke-3, 2–3 sesi @1,5 jam",
+    sdm:"3–4 mahasiswa pengajar",
+    biaya:"Rp 100.000 – 200.000 (alat peraga)",
+    output:"Modul dasar bahasa Inggris & sesi belajar interaktif",
+    indikator:"Siswa mampu praktik percakapan dasar sederhana"},
+  {icon:"🎬",title:"Video Profil Desa",
+    tujuan:"Membuat konten visual promosi desa yang menampilkan potensi, budaya, dan keindahan Desa Prambatan.",
+    sasaran:"Masyarakat umum & calon investor/wisatawan",
+    waktu:"Minggu ke-3 s.d. ke-4",
+    sdm:"3 mahasiswa (shooting & editing)",
+    biaya:"Rp 100.000 – 300.000",
+    output:"Video profil desa berdurasi 3–5 menit siap unggah",
+    indikator:"Video selesai & dipublikasikan di kanal resmi desa"},
+  {icon:"🏷️",title:"Branding Produk Lokal",
+    tujuan:"Membangun identitas visual (logo, kemasan, nama merek) untuk produk unggulan desa.",
+    sasaran:"Pelaku UMKM & pengrajin ndalung pelepah pisang",
+    waktu:"Minggu ke-4",
+    sdm:"3 mahasiswa (desain grafis & branding)",
+    biaya:"Rp 150.000 – 400.000 (cetak label/kemasan contoh)",
+    output:"Desain logo, label, & konsep kemasan produk unggulan",
+    indikator:"Minimal 3 produk memiliki identitas merek baru"},
+];
+
+const list = document.getElementById('proker-list');
+prokerData.forEach((p,i)=>{
+  const card = document.createElement('div');
+  card.className = 'proker-card';
+  card.innerHTML = `
+    <div class="proker-head">
+      <div class="num">${i+1}</div>
+      <div class="icon">${p.icon}</div>
+      <h3>${p.title}</h3>
+      <div class="chev">▾</div>
+    </div>
+    <div class="proker-body">
+      <div class="proker-body-inner">
+        <div class="pk-field"><b>🎯 Tujuan</b><span>${p.tujuan}</span></div>
+        <div class="pk-field"><b>👥 Sasaran</b><span>${p.sasaran}</span></div>
+        <div class="pk-field"><b>🗓️ Waktu Pelaksanaan</b><span>${p.waktu}</span></div>
+        <div class="pk-field"><b>🧑‍🤝‍🧑 Kebutuhan SDM</b><span>${p.sdm}</span></div>
+        <div class="pk-field"><b>💰 Estimasi Biaya</b><span>${p.biaya}</span></div>
+        <div class="pk-field"><b>📦 Output</b><span>${p.output}</span></div>
+        <div class="pk-field"><b>📈 Indikator Keberhasilan</b><span>${p.indikator}</span></div>
+      </div>
+    </div>`;
+  card.querySelector('.proker-head').addEventListener('click', ()=>{
+    card.classList.toggle('open');
+  });
+  list.appendChild(card);
+});
+
+/* ---------------- Sidebar mobile toggle ---------------- */
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const hamburger = document.getElementById('hamburger');
+function openSidebar(){ sidebar.classList.add('open'); overlay.classList.add('show'); }
+function closeSidebar(){ sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+hamburger.addEventListener('click', ()=> sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+overlay.addEventListener('click', closeSidebar);
+document.querySelectorAll('#nav-links a').forEach(a=>{
+  a.addEventListener('click', ()=>{ closeSidebar(); });
+});
+
+/* ---------------- Active nav link on scroll ---------------- */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('#nav-links a');
+function setActiveLink(){
+  let current = sections[0].id;
+  const scrollPos = window.scrollY + 120;
+  sections.forEach(sec=>{
+    if(scrollPos >= sec.offsetTop) current = sec.id;
+  });
+  navLinks.forEach(link=>{
+    link.classList.toggle('active', link.getAttribute('href') === '#'+current);
+  });
+}
+
+/* ---------------- Progress bar + back to top + reveal ---------------- */
+const progressBar = document.getElementById('progress-bar');
+const backToTop = document.getElementById('backToTop');
+const revealEls = document.querySelectorAll('.reveal');
+
+function onScroll(){
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollTop/docHeight)*100 : 0;
+  progressBar.style.width = pct + '%';
+
+  backToTop.style.display = scrollTop > 400 ? 'flex' : 'none';
+
+  setActiveLink();
+
+  revealEls.forEach(el=>{
+    const rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 80){ el.classList.add('show'); }
+  });
+}
+window.addEventListener('scroll', onScroll);
+window.addEventListener('load', onScroll);
+
+backToTop.addEventListener('click', ()=>{
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* ---------------- Dark mode ---------------- */
+const darkToggle = document.getElementById('darkToggle');
+const darkLabel = document.getElementById('darkLabel');
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  darkLabel.textContent = theme === 'dark' ? 'Mode Terang' : 'Mode Gelap';
+  darkToggle.firstChild.textContent = theme === 'dark' ? '☀️ ' : '🌙 ';
+}
+let savedTheme = 'light';
+try{ savedTheme = window.localStorage ? (localStorage.getItem('kkn-theme') || 'light') : 'light'; }catch(e){}
+applyTheme(savedTheme);
+darkToggle.addEventListener('click', ()=>{
+  const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(cur);
+  try{ localStorage.setItem('kkn-theme', cur); }catch(e){}
+});
+
+/* ---------------- Print button (sidebar) ---------------- */
+document.getElementById('printBtnSide').addEventListener('click', ()=> window.print());
+
+/* ---------------- Smooth scroll offset fix for anchor links ---------------- */
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+  anchor.addEventListener('click', function(e){
+    const targetId = this.getAttribute('href').slice(1);
+    const target = document.getElementById(targetId);
+    if(target){
+      e.preventDefault();
+      const y = target.getBoundingClientRect().top + window.scrollY - 8;
+      window.scrollTo({top:y, behavior:'smooth'});
+    }
+  });
+});
+</script>
+</body>
+</html>
